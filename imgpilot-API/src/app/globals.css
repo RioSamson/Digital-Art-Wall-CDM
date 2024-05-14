@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #efefef;
+}
+
+
+.dropdown-menu-button.main-menu-trigger.zen-mode-transition {
+  display: none;
+}
+
+.layer-ui__wrapper__top-right.zen-mode-transition, .layer-ui__wrapper__footer-right.zen-mode-transition {
+  display: none !important;
+}
+
+.ToolIcon__keybinding, .App-toolbar__divider {
+  display: none;
+}
+
+[title="Hand (panning tool) — H"], [title="Keep selected tool active after drawing — Q"], [title="More tools"], [title="Diamond — D or 3"], [title="Arrow — A or 5"], [title="Line — L or 6"], [title="Insert image — 9"] {
+  display: none !important;
+}
+
+.HintViewer {
+  display: none !important;
+}
+
+.mobile-misc-tools-container {
+  display: none !important;
+}
+
+.layer-ui__wrapper__footer-left {
+  display: none;
+}
+
+.excalidraw .App-top-bar {
+  flex-direction: row !important;
+}
+
+.shapes-section {
+  order: -999;
+  width: min-content;
+}
+
+.excalidraw {
+  overflow: visible !important;
+  --shadow-island: none !important;
+  --button-width: 28px !important;
+  --button-height: 28px !important;
+  --border-radius-lg: 2px !important;
+  --color-surface-primary-container: #ccc !important;
+  --color-surface-high: #ccc !important;
+  --color-primary-darkest: #111 !important;
+  --color-brand-hover: transparent !important;
+  --button-active-border: transparent !important;
+}
+
+.excalidraw .Stack_horizontal {
+  grid-auto-flow: row !important;
+}
+
+.Island.App-menu__left {
+  z-index: 100;
+  left: 0;
+  top: -16px;
+}
+
+
+.panelColumn fieldset, .panelColumn .control-label {
+  display: none !important;
+}
+
+.selection .panelColumn fieldset:nth-of-type(2), .freedraw .panelColumn fieldset:nth-of-type(2), .text .panelColumn fieldset:nth-of-type(2) {
+  display: block !important;
+}
+
+.panelColumn legend, .panelColumn h3 {
+  display: none !important;
+}
+
+.excalidraw .panelColumn .buttonList {
+  flex-direction: column;
+  margin-top: 4px;
+}
+
+.excalidraw:not(.excalidraw--mobile) .App-toolbar {
+  position: absolute !important;
+  top: -16px;
+  left: -60px;
+}
+
+.excalidraw .App-toolbar--mobile {
+  position: absolute !important;
+  top: -16px;
+  left: -60px;
+  width: auto !important;
+}
+
+.excalidraw.excalidraw--mobile .App-toolbar-content {
+  background: #fff;
+  width: min-content;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+[aria-label="Edit"] {
+  display: none !important;
+}
+
+.excalidraw .App-bottom-bar {
+  margin: 0 !important;
+}
+
+.excalidraw .App-mobile-menu {
+  width: min-content !important;
+  left: -44px !important;
+  position: absolute;
+  bottom: 0;
+}
+
+.excalidraw .Island {
+  background: transparent !important;
+}
+
+
+.excalidraw .color-picker-container {
+  padding: 0 !important;
+  display: block !important;
+}
+
+.color-picker__top-picks, .color-picker__button__hotkey-label {
+  display: none !important;
+}
+
+.excalidraw .color-picker__button {
+  border-color: #ccc;
+}
+
+.excalidraw .color-picker__button--large {
+  --radius: 100% !important;
+}
+
+.excalidraw .color-picker__button.active-color {
+  --radius: 100% !important;
+}
+
+.excalidraw .App-bottom-bar > .Island .panelColumn {
+  padding: 8px !important;
+}
+
+[data-radix-popper-content-wrapper] > div {
+  border-radius: 0 !important;
+}
+
+.excalidraw .color-picker__input-label {
+  border-radius: 4px !important;
+}
+.excalidraw .color-picker__input-label:focus-within {
+  box-shadow: none !important;
+}
+
+.panelColumn .color-picker__button {
+  border: none !important;
+}
+
+.excalidraw .App-toolbar-container .ToolIcon__icon {
+  width: 36px !important;
+  height: 36px !important;
+}
