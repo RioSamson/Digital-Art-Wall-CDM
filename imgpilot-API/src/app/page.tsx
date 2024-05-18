@@ -31,6 +31,7 @@ import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types
 import { Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import planetImage from './planet.png';
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useThrottledCallback } from "use-debounce";
@@ -119,32 +120,20 @@ export default function Home() {
 
   return (
     <div className="inset-0 absolute">
+      <div className="flex justify gap-4 pt-4 px-4">
+        <a href="#" className="button-image">
+          <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
+        </a>
+        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">Button 1</button>
+        <button className="px-4 py-2 bg-green-500 text-white rounded-md">Button 2</button>
+        <button className="px-4 py-2 bg-red-500 text-white rounded-md">Button 3</button>
+      </div>
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
-        <div className="flex-1 flex flex-col lg:flex-row gap-4 px-4">
-          <div className="w-24 shrink-0 hidden lg:flex border border-zinc-300 rounded flex-col items-center gap-2 py-2 bg-white">
-            {presets.map((preset) => (
-              <div
-                key={preset.name}
-                onClick={() => {
-                  setDrawState((state) => ({
-                    ...state,
-                    prompt: preset.prompt,
-                  }));
-                  if (excalidrawAPI) {
-                    excalidrawAPI.updateScene({ elements: preset.elements });
-                    setTimeout(() => zoomToFit(excalidrawAPI));
-                  }
-                }}
-                className="h-20 w-20 border border-zinc-200 rounded p-2 bg-white cursor-pointer"
-              >
-                <img src={preset.base64} className="object-cover" />
-              </div>
-            ))}
-          </div>
-          <div className="w-full h-full min-h-[500px] lg:w-1/2 rounded border-zinc-300 overflow-hidden border relative flex">
-            <div className="flex-0 w-11 border-r bg-zinc-100 border-zinc-200"></div>
-            <div className={`flex-1 relative ${activeTool}`}>
+        <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
+          <div className="w-full h-full min-h-[300px] lg:w-1/2 lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
+            <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
+            <div className={`flex-1 relative `}>
               <Excalidraw
                 detectScroll={true}
                 autoFocus={true}
@@ -160,11 +149,7 @@ export default function Home() {
               ></Excalidraw>
             </div>
           </div>
-          <div className="w-full h-2/3 min-h-[400px] lg:h-full lg:w-1/2 bg-white rounded border-zinc-300 overflow-hidden border relative">
-            <GitHubCorners
-              position="right"
-              href="https://github.com/leptonai/imgpilot"
-            />
+          <div className="w-full h-2/3 min-h-[300px] lg:h-full lg:w-1/2 bg-white rounded border-zinc-300 overflow-hidden border relative">
             <div className="absolute inset-0 flex justify-center items-center">
               {imageSrc && init && (
                 <img
