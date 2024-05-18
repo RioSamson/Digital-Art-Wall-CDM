@@ -72,6 +72,11 @@ export default function Home() {
     setInit(true);
   }, []);
   const setDrawStateThrottle = useThrottledCallback(setDrawState, 500);
+  const clearExcalidrawCanvas = () => {
+    if (excalidrawAPI) {
+      excalidrawAPI.updateScene({ elements: [] }); // Clear all elements from the Excalidraw canvas
+    }
+  };
 
   useEffect(() => {
     setBeautifyImage("");
@@ -191,17 +196,13 @@ export default function Home() {
             <div className="flex-0 hidden md:block">
               <Image alt="logo" src="/logo.svg" height={46} width={46} />
             </div>
-            <div className="flex-0 flex flex-col">
-              <div className="text-2xl font-medium text-primary">ImgPilot</div>
-              <div className="text-xs hidden md:block text-zinc-600 hover:text-zinc-900">
-                <a href="https://lepton.ai" target="_blank">
-                  Powered by Lepton AI
-                </a>
+            <div className="flex-0 flex flex-col"> 
+              <div className="text-xs hidden md:block text-zinc-600 hover:text-zinc-900">   
               </div>
             </div>
           </div>
           <div className="flex-1 flex gap-2 items-end">
-            <div className="flex-0 w-full md:w-96">
+          <div className="flex-0 w-full md:w-96">
               <div className="text-xs pl-1 text-zinc-600">
                 What do you want to draw
               </div>
@@ -269,6 +270,9 @@ export default function Home() {
               }}
             >
               <Wand2 size={16} />
+            </Button>
+            <Button onClick={clearExcalidrawCanvas}>
+               clear
             </Button>
           </div>
         </div>
