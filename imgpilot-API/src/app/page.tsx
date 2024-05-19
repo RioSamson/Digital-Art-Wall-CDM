@@ -32,6 +32,8 @@ import { Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import planetImage from './planet.png';
+import ufoImage from './ufo.png';
+import alienImage from './alien.png';
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useThrottledCallback } from "use-debounce";
@@ -68,6 +70,7 @@ export default function Home() {
   const [beautifyLoading, setBeautifyLoading] = useState(false);
   const [init, setInit] = useState(false);
   const [activeTool, setActiveTool] = useState("freedraw");
+  const [activeButton, setActiveButton] = useState<string | null>(null);
   useEffect(() => {
     setDrawState(getLocalState());
     setInit(true);
@@ -78,7 +81,9 @@ export default function Home() {
       excalidrawAPI.updateScene({ elements: [] }); // Clear all elements from the Excalidraw canvas
     }
   };
-
+  const handleButtonClick = (buttonName: string) => {
+    setActiveButton(buttonName);
+  };
   useEffect(() => {
     setBeautifyImage("");
   }, [drawState.prompt, drawState.elements]);
@@ -120,13 +125,16 @@ export default function Home() {
 
   return (
     <div className="inset-0 absolute">
-      <div className="flex justify gap-4 pt-4 px-4">
-        <a href="#" className="button-image">
-          <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
-        </a>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">Button 1</button>
-        <button className="px-4 py-2 bg-green-500 text-white rounded-md">Button 2</button>
-        <button className="px-4 py-2 bg-red-500 text-white rounded-md">Button 3</button>
+      <div className="flex justify gap-10 pt-4 px-20">
+      <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
+        <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
+      </a>
+      <a href="#" className={`button-image ${activeButton === 'ufo' ? 'active' : ''}`} onClick={() => handleButtonClick('ufo')}>
+        <img src={ufoImage.src} alt="UFO" className="button-image" width={60} height={60} />
+      </a>
+      <a href="#" className={`button-image ${activeButton === 'alien' ? 'active' : ''}`} onClick={() => handleButtonClick('alien')}>
+        <img src={alienImage.src} alt="Alien" className="button-image" width={60} height={60} />
+      </a>
       </div>
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
