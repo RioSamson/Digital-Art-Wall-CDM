@@ -121,6 +121,7 @@ export default function Home() {
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
         <div className="flex-1 flex flex-col lg:flex-row gap-4 px-4">
+          
           {/* This div is for the different options on the left- choosing between options
           We do not need this right now, so this will be commented*/}
           {/* <div className="w-24 shrink-0 hidden lg:flex border border-zinc-300 rounded flex-col items-center gap-2 py-2 bg-white">
