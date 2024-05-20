@@ -125,21 +125,24 @@ export default function Home() {
 
   return (
     <div className="inset-0 absolute">
-      <div className="flex justify gap-10 pt-4 px-20">
-      <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
-        <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
-      </a>
-      <a href="#" className={`button-image ${activeButton === 'ufo' ? 'active' : ''}`} onClick={() => handleButtonClick('ufo')}>
-        <img src={ufoImage.src} alt="UFO" className="button-image" width={60} height={60} />
-      </a>
-      <a href="#" className={`button-image ${activeButton === 'alien' ? 'active' : ''}`} onClick={() => handleButtonClick('alien')}>
-        <img src={alienImage.src} alt="Alien" className="button-image" width={60} height={60} />
-      </a>
+      <div className="flex justify-between items-center pt-4 px-20">
+        <div className="flex gap-20">
+          <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
+            <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
+          </a>
+          <a href="#" className={`button-image ${activeButton === 'ufo' ? 'active' : ''}`} onClick={() => handleButtonClick('ufo')}>
+            <img src={ufoImage.src} alt="UFO" className="button-image" width={60} height={60} />
+          </a>
+          <a href="#" className={`button-image ${activeButton === 'alien' ? 'active' : ''}`} onClick={() => handleButtonClick('alien')}>
+            <img src={alienImage.src} alt="Alien" className="button-image" width={60} height={60} />
+          </a>
+        </div>
+        <Button>Upload</Button>
       </div>
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
         <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
-          <div className="w-full h-full min-h-[300px] lg:w-1/2 lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
+          <div className="w-full h-full min-h-[300px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
             <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
             <div className={`flex-1 relative `}>
               <Excalidraw
@@ -157,7 +160,7 @@ export default function Home() {
               ></Excalidraw>
             </div>
           </div>
-          <div className="w-full h-2/3 min-h-[300px] lg:h-full lg:w-1/2 bg-white rounded border-zinc-300 overflow-hidden border relative">
+          <div className="w-full h-2/3 min-h-[300px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative">
             <div className="absolute inset-0 flex justify-center items-center">
               {imageSrc && init && (
                 <img
