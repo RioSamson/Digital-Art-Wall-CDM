@@ -31,6 +31,9 @@ import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types
 import { Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import planetImage from './planet.png';
+import ufoImage from './ufo.png';
+import alienImage from './alien.png';
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useThrottledCallback } from "use-debounce";
@@ -71,12 +74,20 @@ export default function Home() {
   const [beautifyLoading, setBeautifyLoading] = useState(false);
   const [init, setInit] = useState(false);
   const [activeTool, setActiveTool] = useState("freedraw");
+  const [activeButton, setActiveButton] = useState<string | null>(null);
   useEffect(() => {
     setDrawState(getLocalState());
     setInit(true);
   }, []);
   const setDrawStateThrottle = useThrottledCallback(setDrawState, 500);
-
+  const clearExcalidrawCanvas = () => {
+    if (excalidrawAPI) {
+      excalidrawAPI.updateScene({ elements: [] }); // Clear all elements from the Excalidraw canvas
+    }
+  };
+  const handleButtonClick = (buttonName: string) => {
+    setActiveButton(buttonName);
+  };
   useEffect(() => {
     setBeautifyImage("");
   }, [drawState.prompt, drawState.elements]);
@@ -118,39 +129,26 @@ export default function Home() {
 
   return (
     <div className="inset-0 absolute">
+      <div className="flex justify-between items-center pt-4 px-20">
+        <div className="flex gap-20">
+          <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
+            <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
+          </a>
+          <a href="#" className={`button-image ${activeButton === 'ufo' ? 'active' : ''}`} onClick={() => handleButtonClick('ufo')}>
+            <img src={ufoImage.src} alt="UFO" className="button-image" width={60} height={60} />
+          </a>
+          <a href="#" className={`button-image ${activeButton === 'alien' ? 'active' : ''}`} onClick={() => handleButtonClick('alien')}>
+            <img src={alienImage.src} alt="Alien" className="button-image" width={60} height={60} />
+          </a>
+        </div>
+        <Button>Upload</Button>
+      </div>
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
-        <div className="flex-1 flex flex-col lg:flex-row gap-4 px-4">
-          
-          {/* This div is for the different options on the left- choosing between options
-          We do not need this right now, so this will be commented*/}
-          {/* <div className="w-24 shrink-0 hidden lg:flex border border-zinc-300 rounded flex-col items-center gap-2 py-2 bg-white">
-            {presets.map((preset) => (
-              <div
-                key={preset.name}
-                onClick={() => {
-                  setDrawState((state) => ({
-                    ...state,
-                    prompt: preset.prompt,
-                  }));
-                  if (excalidrawAPI) {
-                    excalidrawAPI.updateScene({ elements: preset.elements });
-                    setTimeout(() => zoomToFit(excalidrawAPI));
-                  }
-                }}
-                className="h-20 w-20 border border-zinc-200 rounded p-2 bg-white cursor-pointer"
-              >
-                <img src={preset.base64} className="object-cover" />
-              </div>
-            ))}
-          </div> */}
-
-
-          {/* --------LEFT DRAWING CANVAS WITH TOOLS --------------------------------------------------- */}
-          {/* ----------The following div is for the left side drawing canvas with the tool bar ---------*/}
-          <div className="w-full h-full min-h-[500px] lg:w-1/2 rounded border-zinc-300 overflow-hidden border relative flex">
-            <div className="flex-0 w-11 border-r bg-zinc-100 border-zinc-200"></div>
-            <div className={`flex-1 relative ${activeTool}`}>
+        <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
+          <div className="w-full h-full min-h-[300px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
+            <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
+            <div className={`flex-1 relative `}>
               <Excalidraw
                 detectScroll={true}
                 autoFocus={true}
@@ -166,17 +164,7 @@ export default function Home() {
               ></Excalidraw>
             </div>
           </div>
-          {/* ---------end of the left side drawing canvas with tools-------------------------------------*/}
-
-
-
-          {/* --------RIGHT RESULT IMAGE --------------------------------------------------- */}
-          {/* ----------The following div is for the right side IMAGE ---------*/}
-          <div className="w-full h-2/3 min-h-[400px] lg:h-full lg:w-1/2 bg-white rounded border-zinc-300 overflow-hidden border relative">
-            <GitHubCorners
-              position="right"
-              href="https://github.com/leptonai/imgpilot"
-            />
+          <div className="w-full h-2/3 min-h-[300px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative">
             <div className="absolute inset-0 flex justify-center items-center">
               {imageSrc && init && (
                 <img
@@ -215,17 +203,13 @@ export default function Home() {
             <div className="flex-0 hidden md:block">
               <Image alt="logo" src="/logo.svg" height={46} width={46} />
             </div>
-            <div className="flex-0 flex flex-col">
-              <div className="text-2xl font-medium text-primary">ImgPilot</div>
-              <div className="text-xs hidden md:block text-zinc-600 hover:text-zinc-900">
-                <a href="https://lepton.ai" target="_blank">
-                  Powered by Lepton AI
-                </a>
+            <div className="flex-0 flex flex-col"> 
+              <div className="text-xs hidden md:block text-zinc-600 hover:text-zinc-900">   
               </div>
             </div>
           </div>
           <div className="flex-1 flex gap-2 items-end">
-            <div className="flex-0 w-full md:w-96">
+          <div className="flex-0 w-full md:w-96">
               <div className="text-xs pl-1 text-zinc-600">
                 What do you want to draw
               </div>
@@ -293,6 +277,9 @@ export default function Home() {
               }}
             >
               <Wand2 size={16} />
+            </Button>
+            <Button onClick={clearExcalidrawCanvas}>
+               clear
             </Button>
           </div>
         </div>

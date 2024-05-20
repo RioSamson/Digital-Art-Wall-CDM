@@ -173,3 +173,15 @@ html, body {
   width: 36px !important;
   height: 36px !important;
 }
+
+.button-image {
+  transition: opacity 0.2s ease;
+}
+
+.button-image.active {
+  opacity: 1; 
+}
+
+.button-image:not(.active) {
+  opacity: 0.6; 
+}
