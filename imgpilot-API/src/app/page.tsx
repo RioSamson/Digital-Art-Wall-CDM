@@ -6,7 +6,6 @@ if (typeof window !== "undefined") {
 import { Dice } from "@/components/dice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { Toaster } from "@/components/ui/toaster";
 import { getRandomDifferent } from "@/lib/utils";
 import { zoomToFit } from "@/util/excalidraw";
@@ -26,14 +25,22 @@ import { useCallbackRefState } from "@/util/useCallbackRefState";
 import { useExcalidrawResponse } from "@/util/useExcalidrawResponse";
 import { usePrevious } from "@/util/usePrevious";
 import { CircleDash, Download } from "@carbon/icons-react";
-import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/types";
+import type { ExcalidrawElement, ExcalidrawImageElement} from "@excalidraw/excalidraw/types/element/types";
 import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
+import { convertToExcalidrawElements } from "@excalidraw/excalidraw";
 import { Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import planetImage from './img-resource/planet.png';
 import ufoImage from './img-resource/ufo.png';
-import alienImage from './img-resource/alien.png';
+import personImage from './img-resource/person.png';
+import planetFrameImage from './img-resource/PlanetFrame.png';
+import penImage from './img-resource/pen.png';
+import eraserImage from './img-resource/eraser.png';
+import magicPenImage from './img-resource/magicpen.png';
+
+
+
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useThrottledCallback } from "use-debounce";
@@ -86,16 +93,29 @@ export default function Home() {
   const setDrawStateThrottle = useThrottledCallback(setDrawState, 500);
   const clearExcalidrawCanvas = () => {
     if (excalidrawAPI) {
-      excalidrawAPI.updateScene({ elements: [] }); // Clear all elements from the Excalidraw canvas
+      excalidrawAPI.updateScene({ elements: [] });s
     }
   };
 
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
-
-  
-  };
-  
+    if(buttonName === 'magicPen'){
+      if (loading) return;
+      setBeautifyLoading(true);
+      fetchImage(imageSrc, realPrompt, 512)
+      .then((data) => {
+        setBeautifyImage(data);
+        setBeautifyLoading(false);
+      })
+      .catch(() => {
+        setBeautifyLoading(false);
+      });
+    }
+    if (buttonName === 'planet') {
+      const elements = convertToExcalidrawElements([{ type: "ellipse", x: 100, y: 250 }]);
+      setDrawState((state) => ({ ...state, elements }));
+    }
+  }
   useEffect(() => {
     setBeautifyImage("");
   }, [drawState.prompt, drawState.elements]);
@@ -134,7 +154,7 @@ export default function Home() {
       setTimeout(() => zoomToFit(excalidrawAPI));
     }
   }, [excalidrawAPI]);
-
+ 
   return (
     <div className="inset-0 absolute flex flex-col">
 
@@ -142,13 +162,13 @@ export default function Home() {
       <div className="flex justify-between items-center pt-4 px-20">
         <div className="flex gap-20">
           <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
-            <img src={planetImage.src} alt="Planet" className="button-image" width={60} height={60} />
+            <img src={planetImage.src} alt="planet" className="button-image" width={60} height={60} />
           </a>
           <a href="#" className={`button-image ${activeButton === 'ufo' ? 'active' : ''}`} onClick={() => handleButtonClick('ufo')}>
             <img src={ufoImage.src} alt="UFO" className="button-image" width={60} height={60} />
           </a>
-          <a href="#" className={`button-image ${activeButton === 'alien' ? 'active' : ''}`} onClick={() => handleButtonClick('alien')}>
-            <img src={alienImage.src} alt="Alien" className="button-image" width={60} height={60} />
+          <a href="#" className={`button-image ${activeButton === 'person' ? 'active' : ''}`} onClick={() => handleButtonClick('person')}>
+            <img src={personImage.src} alt="person" className="button-image" width={60} height={60} />
           </a>
         </div>
         <Button>Upload</Button>
@@ -301,8 +321,17 @@ export default function Home() {
         </div>
         {/* --------------------------- end of bottom pannel div ------------------------------*/}
 
-
-
+      </div>
+      <div className="flex justify-center items-center mt-8 space-x-8">
+        <a href="#" className={`button-image ${activeButton === 'pen' ? 'active' : ''}`} onClick={() => handleButtonClick('pen')}>
+          <img src={penImage.src} alt="planet" className="button-image" width={60} height={60} />
+        </a>
+        <a href="#" className={`button-image ${activeButton === 'eraser' ? 'active' : ''}`} onClick={() => handleButtonClick('eraser')}>
+          <img src={eraserImage.src} alt="eraser" className="button-image" width={60} height={60} />
+        </a>
+        <a href="#" className={`button-image ${activeButton === 'magicPen' ? 'active' : ''}`} onClick={() => handleButtonClick('magicPen')}>
+          <img src={magicPenImage.src} alt="magicPen" className="button-image" width={60} height={60} />
+        </a>
       </div>
     </div>
   );
