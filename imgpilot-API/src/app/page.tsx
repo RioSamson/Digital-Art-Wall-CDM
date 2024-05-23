@@ -31,13 +31,15 @@ import type { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types
 import { Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import planetImage from './planet.png';
-import ufoImage from './ufo.png';
-import alienImage from './alien.png';
+import planetImage from './img-resource/planet.png';
+import ufoImage from './img-resource/ufo.png';
+import alienImage from './img-resource/alien.png';
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useThrottledCallback } from "use-debounce";
 
+//here, we import excalidraw dynamically so we only import when we need to.
+//ssr means that the server side rendering is set to false so only client side rendering will happen
 const Excalidraw = dynamic(
   async () => (await import("@excalidraw/excalidraw")).Excalidraw,
   {
@@ -45,6 +47,7 @@ const Excalidraw = dynamic(
   },
 );
 
+//we will not need this as this is for the little icon on the edge
 const GitHubCorners = dynamic(
   async () => (await import("@uiw/react-github-corners")).default,
   {
@@ -55,6 +58,7 @@ const GitHubCorners = dynamic(
 const getVersion = (elements: readonly ExcalidrawElement[]): string => {
   return elements.map((e) => e.version).join("");
 };
+
 export default function Home() {
   const [excalidrawAPI, excalidrawRefCallback] =
     useCallbackRefState<ExcalidrawImperativeAPI>();
@@ -152,8 +156,10 @@ export default function Home() {
 
 
       <Toaster></Toaster>
+      
       <div className="h-full w-full flex flex-col gap-8 pt-8">
 
+        {/* start of the drawing canvas */}
         <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
           <div className="w-full h-full min-h-[550px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
             <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
@@ -201,11 +207,12 @@ export default function Home() {
               </Button>
             </div>
           </div>
-
+        {/* ---------end of the right side drawing image -------------------------------------*/}
         </div>
-        {/* --------------------- */}
 
 
+
+        {/* ------------------This div contains the whole bottom pannel-------------------- */}
         <div className="flex w-full items-end gap-6 px-4 pb-8">
           <div className="flex gap-1 items-center">
             {/* commented out the logo of imgpilot */}
@@ -292,6 +299,10 @@ export default function Home() {
             </Button>
           </div>
         </div>
+        {/* --------------------------- end of bottom pannel div ------------------------------*/}
+
+
+
       </div>
     </div>
   );
