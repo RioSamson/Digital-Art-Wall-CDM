@@ -157,8 +157,6 @@ export default function Home() {
  
   return (
     <div className="inset-0 absolute flex flex-col">
-
-      
       <div className="flex justify-between items-center pt-4 px-20">
         <div className="flex gap-20">
           <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
@@ -172,16 +170,16 @@ export default function Home() {
           </a>
         </div>
         <Button>Upload</Button>
+        <Button onClick={clearExcalidrawCanvas}>
+               clear
+        </Button>
       </div>
-
-
-      <Toaster></Toaster>
-      
+      <Toaster></Toaster>  
       <div className="h-full w-full flex flex-col gap-8 pt-8">
 
         {/* start of the drawing canvas */}
         <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
-          <div className="w-full h-full min-h-[550px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
+          <div className="w-full h-full min-h-[100px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
             <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
             <div className={`flex-1 relative `}>
               <Excalidraw
@@ -201,21 +199,21 @@ export default function Home() {
           </div>
 
           {/* styles the div classes using TAILWIND CSS to style it withing the html container */}
-          <div className="w-1/6 h-1/6 min-h-[10px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative">
-            <div className="absolute inset-0 flex justify-center items-center">
-              {imageSrc && init && (
+          {/* <div className="w-1/6 h-1/6 min-h-[10px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative"> */}
+            {/* <div className="absolute inset-0 flex justify-center items-center"> */}
+              {/* {imageSrc && init && (
                 <img
                   alt="img"
                   className="w-full h-full object-contain"
                   src={imageSrc}
                 />
-              )}
-              {(loading || beautifyLoading) && (
+              )} */}
+              {/* {(loading || beautifyLoading) && (
                 <div className="absolute left-4 bottom-4">
                   <CircleDash className="h-4 w-4 text-zinc-400 animate-spin"></CircleDash>
                 </div>
-              )}
-              <Button
+              )} */}
+              {/* <Button
                 size="icon"
                 variant="ghost"
                 className="absolute bottom-2 right-2"
@@ -224,9 +222,9 @@ export default function Home() {
                 <a href={imageSrc} download>
                   <Download />
                 </a>
-              </Button>
-            </div>
-          </div>
+              </Button> */}
+            {/* </div> */}
+          {/* </div> */}
         {/* ---------end of the right side drawing image -------------------------------------*/}
         </div>
 
@@ -245,8 +243,8 @@ export default function Home() {
             </div>
           </div>
           <div className="flex-1 flex gap-2 items-end">
-          <div className="flex-0 w-full md:w-96">
-              <div className="text-xs pl-1 text-zinc-600">
+          {/* <div className="flex-0 w-full md:w-96"> */}
+              {/* <div className="text-xs pl-1 text-zinc-600">
                 What do you want to draw
               </div>
               <Input
@@ -274,9 +272,9 @@ export default function Home() {
                 }
                 className="h-9 !ring-0 border-zinc-300 !ring-offset-0"
                 placeholder=""
-              />
-            </div>
-            <Button
+              /> */}
+            {/* </div> */}
+            {/* <Button
               disabled={beautifyLoading} //btn is disabbled while beutify is loading
               size="sm" //btn size small
               onClick={() => { //when clicked...
@@ -316,7 +314,7 @@ export default function Home() {
             </Button>
             <Button onClick={clearExcalidrawCanvas}>
                clear
-            </Button>
+            </Button> */}
           </div>
         </div>
         {/* --------------------------- end of bottom pannel div ------------------------------*/}
