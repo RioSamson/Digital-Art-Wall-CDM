@@ -58,12 +58,16 @@ const getVersion = (elements: readonly ExcalidrawElement[]): string => {
 export default function Home() {
   const [excalidrawAPI, excalidrawRefCallback] =
     useCallbackRefState<ExcalidrawImperativeAPI>();
-  const [drawState, setDrawState] = useState<LocalState>({
+ 
+//  useState initializes drawState with a default value and provides setDrawState to update it.
+//  drawState is an object with properties: style, prompt, image, and elements.
+    const [drawState, setDrawState] = useState<LocalState>({
     style: "",
     prompt: "",
     image: "",
     elements: [],
   });
+
   const [beautifyImage, setBeautifyImage] = useState("");
   const paintType = useRef<string | null>(null);
   const artStyle = useRef<string | null>(null);
@@ -81,9 +85,13 @@ export default function Home() {
       excalidrawAPI.updateScene({ elements: [] }); // Clear all elements from the Excalidraw canvas
     }
   };
+
   const handleButtonClick = (buttonName: string) => {
     setActiveButton(buttonName);
+
+  
   };
+  
   useEffect(() => {
     setBeautifyImage("");
   }, [drawState.prompt, drawState.elements]);
@@ -124,7 +132,9 @@ export default function Home() {
   }, [excalidrawAPI]);
 
   return (
-    <div className="inset-0 absolute">
+    <div className="inset-0 absolute flex flex-col">
+
+      
       <div className="flex justify-between items-center pt-4 px-20">
         <div className="flex gap-20">
           <a href="#" className={`button-image ${activeButton === 'planet' ? 'active' : ''}`} onClick={() => handleButtonClick('planet')}>
@@ -139,10 +149,13 @@ export default function Home() {
         </div>
         <Button>Upload</Button>
       </div>
+
+
       <Toaster></Toaster>
       <div className="h-full w-full flex flex-col gap-8 pt-8">
+
         <div className="flex-1 flex flex-row lg:flex-col gap-4 px-20">
-          <div className="w-full h-full min-h-[300px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
+          <div className="w-full h-full min-h-[550px] lg:h-2/3 rounded border-zinc-300 overflow-hidden border relative flex">
             <div className={`flex-0 w-11 border-r bg-zinc-100 border-zinc-200 ${activeTool}`}></div>
             <div className={`flex-1 relative `}>
               <Excalidraw
@@ -160,7 +173,9 @@ export default function Home() {
               ></Excalidraw>
             </div>
           </div>
-          <div className="w-full h-2/3 min-h-[300px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative">
+
+          {/* styles the div classes using TAILWIND CSS to style it withing the html container */}
+          <div className="w-1/6 h-1/6 min-h-[10px] lg:h-full bg-white rounded border-zinc-300 overflow-hidden border relative">
             <div className="absolute inset-0 flex justify-center items-center">
               {imageSrc && init && (
                 <img
@@ -186,12 +201,17 @@ export default function Home() {
               </Button>
             </div>
           </div>
+
         </div>
+        {/* --------------------- */}
+
+
         <div className="flex w-full items-end gap-6 px-4 pb-8">
           <div className="flex gap-1 items-center">
-            <div className="flex-0 hidden md:block">
+            {/* commented out the logo of imgpilot */}
+            {/* <div className="flex-0 hidden md:block"> 
               <Image alt="logo" src="/logo.svg" height={46} width={46} />
-            </div>
+            </div> */}
             <div className="flex-0 flex flex-col"> 
               <div className="text-xs hidden md:block text-zinc-600 hover:text-zinc-900">   
               </div>
@@ -230,25 +250,25 @@ export default function Home() {
               />
             </div>
             <Button
-              disabled={beautifyLoading}
-              size="sm"
-              onClick={() => {
+              disabled={beautifyLoading} //btn is disabbled while beutify is loading
+              size="sm" //btn size small
+              onClick={() => { //when clicked...
                 artStyle.current = getRandomDifferent(
                   artStyles,
                   artStyle.current,
-                );
+                ); //gets a random art style
                 paintType.current = getRandomDifferent(
                   paintingTypes,
                   paintType.current,
-                );
+                ); //get paint style
                 setDrawState((state) => ({
                   ...state,
                   style: `${paintType.current}, ${artStyle.current}`,
                 }));
               }}
             >
-              <Dice />
-            </Button>
+              <Dice /> 
+            </Button> 
             <Button
               disabled={beautifyLoading}
               size="sm"
