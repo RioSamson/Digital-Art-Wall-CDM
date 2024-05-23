@@ -8,6 +8,7 @@ export const predefineState: Partial<AppState> = {
     locked: false,
     lastActiveTool: null,
   },
+  // zenModeEnabled: false, viewBackgroundColor: "#a5d8ff",
   openMenu: "shape",
 };
 
