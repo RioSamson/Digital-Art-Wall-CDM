@@ -41,7 +41,7 @@ import { useThrottledCallback } from "use-debounce";
 const Excalidraw = dynamic(
   async () => (await import("@excalidraw/excalidraw")).Excalidraw,
   {
-    ssr: false,
+    ssr: false, 
   },
 );
 
